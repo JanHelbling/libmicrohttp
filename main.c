@@ -13,6 +13,11 @@ int main(int argc,char *argv[]){
 			printf("%s[DEBUG]%s[%s][%s]: http_func() has returned '%d'. %sRequest failed.%s\n",REDBOLD,NOCOLOR,__FILE__,__func__,status_code,RED,NOCOLOR);
 		else
 			printf("%s[DEBUG]%s[%s][%s]: http_func() has returned HTTP-CODE[%d]\n",REDBOLD,NOCOLOR,__FILE__,__func__,status_code);
+		char resp[2];
+		printf("Do you want print the data in stdout? (y/n) ");
+		fgets(resp,2,stdin);
+		if(resp[0] == 'y' || resp[0] == 'Y')
+			puts(buf);
 	#endif
 	return 0;
 }

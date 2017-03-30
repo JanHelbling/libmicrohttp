@@ -1,4 +1,4 @@
-regexp.c regexp.h, extract RegexMatches in C
+http_func.c http_func.h parse_url.c parse_url.h - A small http library
 
     Copyright (C) 2014 by Jan Helbling <jan.helbling@gmail.com>
 

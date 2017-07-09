@@ -58,7 +58,7 @@ int http_func(const char *fullurl,char *buffer,int num, int method){
 	struct sockaddr_in addr;
 	addr.sin_addr.s_addr	= inet_addr(ip_addr);
 	addr.sin_family		= AF_INET;
-	addr.sin_port		= htons(80);
+	addr.sin_port		= (in_port_t)htons(80);
 	
 	#if DEBUG > 0
                 printf("%s[DEBUG]%s[%s][%s]: creating socket and connect to '%s'...\n",REDBOLD,NOCOLOR,__FILE__,__func__,ip_addr);

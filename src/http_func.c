@@ -84,7 +84,7 @@ int http_func(const char *fullurl,char *buffer,int num, int method){
 	char *send_buffer = (char *)malloc(8192);
 	memset(send_buffer,NULL,8192);
 	
-	sprintf(send_buffer,"%s %s%s HTTP/1.0\nHost: %s\nUser-Agent: Mozilla/5.0\n\n",mt,u->path,u->query,u->hostname);
+	sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
 	
 	#if DEBUG > 0
 		printf("%s[DEBUG]%s[%s][%s]: send http-request: [%d bytes]...\n",REDBOLD,NOCOLOR,__FILE__,__func__,strlen(send_buffer));

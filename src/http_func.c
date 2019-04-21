@@ -290,7 +290,7 @@ int http_func(const char *fullurl, char *buffer, int num, int method)
 		ShowCerts(ssl);
 		SSL_write(ssl, send_buffer, strlen(send_buffer));       //encrypt and send message
 		bytes = SSL_read(ssl, buf, num);      //get reply and decrypt
-//		buf[bytes] = 0;
+		buf[bytes] = 0;
 		SSL_free(ssl);
 		memcpy(buffer,buf,num);
 		char code[3] = {0};

@@ -12,7 +12,7 @@
 #include <parse_url.h>
 #include <http_func.h>
 
-#define URL "http://www.pradop.ch/"
+#define URL "https://www.ccczh.ch/"
 #define FAIL   -1
 
 int main(int argc,char *argv[]){	

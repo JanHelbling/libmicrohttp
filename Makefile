@@ -23,7 +23,7 @@ $(TARGET3).o:	$(TARGET3).c
 	$(CC) $(LINKOPT) $(CFLAGS) $(TARGET3).c -lssl -lcrypto
 
 $(TARGET4):	$(TARGET1).o $(TARGET2).o
-	$(AR) $(AROPTS) $(TARGET4) $(TARGET1).o $(TARGET2).o -lssl -lcrypto
+	$(AR) $(AROPTS) $(TARGET4) $(TARGET1).o $(TARGET2).o
 
 all:	$(TARGET1).o $(TARGET2).o $(TARGET3).o
 	$(CC) $(CFLAGS) $(TARGET1).o $(TARGET2).o $(TARGET3).o -o $(TARGET3) -lssl -lcrypto

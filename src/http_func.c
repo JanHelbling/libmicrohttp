@@ -105,12 +105,12 @@ int ShowCerts(SSL* ssl)
   	cert = SSL_get_peer_certificate(ssl);	/* get the server's certificate */
         if ( cert != NULL )
     	{
-	        printf("Server certificates:\n");
+	        printf("%s[DEBUG]%s[%s][%s]: Server certificates:\n",REDBOLD,NOCOLOR,__FILE__,__func__);
        		line = X509_NAME_oneline(X509_get_subject_name(cert), 0, 0);
-        	printf("Subject: %s\n", line);
+		printf("%s[DEBUG]%s[%s][%s]: Subject: %s\n",REDBOLD,NOCOLOR,__FILE__,__func__, line);
         	free(line);							/* free the malloc'ed string */
         	line = X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0);
-        	printf("Issuer: %s\n", line);
+        	printf("%s[DEBUG]%s[%s][%s]: Issuer: %s\n",REDBOLD,NOCOLOR,__FILE__,__func__, line);
         	free(line);							/* free the malloc'ed string */
         	X509_free(cert);					/* free the malloc'ed certificate copy */
     	}
@@ -285,8 +285,9 @@ int http_func(const char *fullurl, char *buffer, int num, int method)
 		char *send_buffer = (char *)malloc(8192);
 		memset(send_buffer,0,8192);
 		sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
-	
-		printf("Connected with %s encryption\n", SSL_get_cipher(ssl));
+		#if DEBUG > 0
+			printf("%s[DEBUG]%s[%s][%s] Connected with %s encryption\n", REDBOLD,NOCOLOR,__FILE__,__func__, SSL_get_cipher(ssl));
+		#endif
 		ShowCerts(ssl);
 		SSL_write(ssl, send_buffer, strlen(send_buffer));       //encrypt and send message
 		bytes = SSL_read(ssl, buf, num);      //get reply and decrypt

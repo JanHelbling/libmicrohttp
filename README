@@ -15,6 +15,4 @@ http_func.c http_func.h parse_url.c parse_url.h - A small http library
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
-    A small http library, take a look at main.c
-
-checkout the https support: $ git checkout https
+    A small http and https library, take a look at main.c

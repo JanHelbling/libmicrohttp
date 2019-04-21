@@ -16,3 +16,7 @@ http_func.c http_func.h parse_url.c parse_url.h - A small http library
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     A small http library, take a look at main.c
+
+
+sudo apt-get install libssh-dev
+sudo apt-get install libgnutls-dev

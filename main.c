@@ -1,7 +1,19 @@
+#include <stdio.h>
+#include <errno.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <resolv.h>
+#include <netdb.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+
 #include <parse_url.h>
 #include <http_func.h>
 
-#define URL "http://www.openbsd.org/"
+#define URL "http://www.pradop.ch/"
+#define FAIL   -1
 
 int main(int argc,char *argv[]){	
 	#if DEBUG > 0

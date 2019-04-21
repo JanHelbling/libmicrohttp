@@ -1,6 +1,6 @@
 CC	=	gcc
 CFLAGS	=	-g -Iinclude
-LINKOPT	=	-c
+LINKOPT	=	-c 
 
 AR	=	ar
 AROPTS	=	-rcs
@@ -14,19 +14,19 @@ TARGET5	=	shell_colors
 default:	all test
 
 $(TARGET1).o:	src/$(TARGET1).c
-	$(CC) $(LINKOPT) $(CFLAGS) src/$(TARGET1).c
+	$(CC) $(LINKOPT) $(CFLAGS) src/$(TARGET1).c -lssl -lcrypto 
 
 $(TARGET2).o:	src/$(TARGET2).c
-	$(CC) $(LINKOPT) $(CFLAGS) src/$(TARGET2).c
+	$(CC) $(LINKOPT) $(CFLAGS) src/$(TARGET2).c -lssl -lcrypto
 
 $(TARGET3).o:	$(TARGET3).c
-	$(CC) $(LINKOPT) $(CFLAGS) $(TARGET3).c
+	$(CC) $(LINKOPT) $(CFLAGS) $(TARGET3).c -lssl -lcrypto
 
 $(TARGET4):	$(TARGET1).o $(TARGET2).o
-	$(AR) $(AROPTS) $(TARGET4) $(TARGET1).o $(TARGET2).o
+	$(AR) $(AROPTS) $(TARGET4) $(TARGET1).o $(TARGET2).o -lssl -lcrypto
 
 all:	$(TARGET1).o $(TARGET2).o $(TARGET3).o
-	$(CC) $(CFLAGS) $(TARGET1).o $(TARGET2).o $(TARGET3).o -o $(TARGET3)
+	$(CC) $(CFLAGS) $(TARGET1).o $(TARGET2).o $(TARGET3).o -o $(TARGET3) -lssl -lcrypto
 
 test:	$(TARGET3)
 	./$(TARGET3)

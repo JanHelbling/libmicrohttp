@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <parse_url.h>
 
 url *parse_url(const char *unparsed_url){
@@ -7,12 +10,12 @@ url *parse_url(const char *unparsed_url){
 		printf("%s[DEBUG]%s[%s][%s]: parse url '%s'...\n",REDBOLD,NOCOLOR,__FILE__,__func__,unparsed_url);
 	#endif
 	
-	memset(u->scheme,NULL,16);
-	memset(u->hostname,NULL,64);
-	memset(u->path,NULL,256);
-	memset(u->query,NULL,256);
-	memset(u->fragment,NULL,64);
-	memset(u->full_url,NULL,656);
+	memset(u->scheme,0,16);
+	memset(u->hostname,0,64);
+	memset(u->path,0,256);
+	memset(u->query,0,256);
+	memset(u->fragment,0,64);
+	memset(u->full_url,0,656);
 		
 	int i;
 	

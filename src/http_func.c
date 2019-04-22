@@ -97,7 +97,6 @@ int do_connect(const char *fullurl, url *u)
 	}
 	return sock;
 }
-
 int ShowCerts(SSL* ssl)
 {   
 	X509 *cert;
@@ -122,7 +121,7 @@ int ShowCerts(SSL* ssl)
 #endif
 }
 
-int http_func(const char *fullurl, char *buffer, int num, int method)
+int http_func(const char *fullurl, char *buffer, int num, int method,const char *post_string)
 {
 	SSL_CTX *ctx = NULL;
         int server;
@@ -205,7 +204,11 @@ int http_func(const char *fullurl, char *buffer, int num, int method)
 	char *send_buffer = (char *)malloc(8192);
 	memset(send_buffer,NULL,8192);
 	
-	sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
+	if(post_string == NULL){
+		sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
+	} else {
+		sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: %d\r\n\r\n%s",mt,u->path,u->query,u->hostname,strlen(post_string),post_string);
+	}
 	
 	#if DEBUG > 0
 		printf("%s[DEBUG]%s[%s][%s]: send http-request: [%d bytes]...\n",REDBOLD,NOCOLOR,__FILE__,__func__,strlen(send_buffer));
@@ -247,10 +250,8 @@ int http_func(const char *fullurl, char *buffer, int num, int method)
 		printf("%s[DEBUG]%s[%s][%s]: http-respopnse received: exactly %d bytes received!\n",REDBOLD,NOCOLOR,__FILE__,__func__,y);
 	#endif
 	
-	buffer += 9;
 	char code[3] = {0};
-	memcpy(code,(char *)buf+9,3);
-	buffer -= 9;
+	memcpy(code,(char *)buffer+9,3);
 	return atoi(code);
 	} else {
 	
@@ -288,7 +289,11 @@ int http_func(const char *fullurl, char *buffer, int num, int method)
     else {
 		char *send_buffer = (char *)malloc(8192);
 		memset(send_buffer,0,8192);
-		sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
+		if(post_string == NULL){
+	                sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
+	        } else {
+        	        sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: %d\r\n\r\n%s",mt,u->path,u->query,u->hostname,strlen(post_string),post_string);
+        	}
 		#if DEBUG > 0
 			printf("%s[DEBUG]%s[%s][%s] Connected with %s encryption\n", REDBOLD,NOCOLOR,__FILE__,__func__, SSL_get_cipher(ssl));
 		#endif

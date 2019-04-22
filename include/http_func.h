@@ -4,4 +4,4 @@ typedef enum {
         POST = 2
 } req;
 
-int http_func(const char *fullurl,char *buffer,int num, int method);
+int http_func(const char *fullurl,char *buffer,int num, int method,const char *post_string);

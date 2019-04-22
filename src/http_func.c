@@ -290,12 +290,21 @@ int http_func(const char *fullurl, char *buffer, int num, int method)
 		#endif
 		ShowCerts(ssl);
 		SSL_write(ssl, send_buffer, strlen(send_buffer));       //encrypt and send message
-		bytes = SSL_read(ssl, buf, num);      //get reply and decrypt
-		buf[bytes] = 0;
+		
+		
+		char b[1];
+		strcpy(buffer,"");
+		int i,n=0;
+		for(i=0;;i++){
+			n = SSL_read(ssl, b, 1);      //get reply and decrypt
+			if(n <= 0 || n == num - 1 )
+				break;
+			bytes += n;
+			strncat(buffer,b,1);
+		}
 		SSL_free(ssl);
-		memcpy(buffer,buf,num);
 		char code[3] = {0};
-		memcpy(code,(char *)buf+9,3);
+		memcpy(code,(char *)buffer+9,3);
 		return atoi(code);
     }
 	}

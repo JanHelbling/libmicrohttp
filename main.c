@@ -1,8 +1,9 @@
 #include <parse_url.h>
 #include <http_func.h>
+#include <debug.h>
 
 #define URL "https://www.ccczh.ch/"
-#define FAIL   -1
+
 
 int main(int argc,char *argv[]){	
 	#if DEBUG > 0
@@ -24,10 +25,13 @@ int main(int argc,char *argv[]){
 			}
 		}
 	#elif DEBUG < 1
-		if(status_code != -1)
+		if(status_code != -1){
+			printf(buf);
 			printf("URL: %s\nHTTP-Code: %d\n",URL,status_code);
-		else
+		}
+		else{
 			printf("URL: %s\nRequest Failed!\n",URL);
+		}
 	#endif
 	free(buf);
 	return 0;

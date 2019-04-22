@@ -4,10 +4,6 @@
 
 #include <shell_colors.h>
 
-#ifndef DEBUG
-	#define DEBUG 3
-#endif
-
 typedef struct {
 	char scheme[16];
 	char hostname[64];

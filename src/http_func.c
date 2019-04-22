@@ -1,4 +1,5 @@
 #include <parse_url.h>
+#include <debug.h>
 
 #include <stdio.h>
 #include <errno.h>
@@ -103,6 +104,7 @@ int ShowCerts(SSL* ssl)
     	char *line;
 
   	cert = SSL_get_peer_certificate(ssl);	/* get the server's certificate */
+#if DEBUG > 0
         if ( cert != NULL )
     	{
 	        printf("%s[DEBUG]%s[%s][%s]: Server certificates:\n",REDBOLD,NOCOLOR,__FILE__,__func__);
@@ -114,8 +116,10 @@ int ShowCerts(SSL* ssl)
         	free(line);							/* free the malloc'ed string */
         	X509_free(cert);					/* free the malloc'ed certificate copy */
     	}
-    	else
-        	printf("No certificates.\n");
+    	else{
+        	printf("%s[DEBUG]%s[%s][%s]: No certificates.\n",REDBOLD,NOCOLOR,__FILE__,__func__);
+	}
+#endif
 }
 
 int http_func(const char *fullurl, char *buffer, int num, int method)

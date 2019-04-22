@@ -8,8 +8,8 @@ int main(int argc,char *argv[]){
 	#if DEBUG > 0
 		printf("%s[DEBUG]%s[%s][%s]: Running main(), execute http_func()...\n",REDBOLD,NOCOLOR,__FILE__,__func__);
 	#endif
-	char buf[8192*2];
-	int status_code = http_func(URL,buf,8192*2,GET);
+	char **buf = (char **)malloc(8192*10 + 1);
+	int status_code = http_func(URL,buf,8192*10,GET);
 	
 	#if DEBUG > 0
 		if(status_code == -1){
@@ -29,5 +29,6 @@ int main(int argc,char *argv[]){
 		else
 			printf("URL: %s\nRequest Failed!\n",URL);
 	#endif
+	free(buf);
 	return 0;
 }

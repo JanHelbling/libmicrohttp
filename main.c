@@ -10,7 +10,11 @@ int main(int argc,char *argv[]){
 		printf("%s[DEBUG]%s[%s][%s]: Running main(), execute http_func()...\n",REDBOLD,NOCOLOR,__FILE__,__func__);
 	#endif
 	char **buf = (char **)malloc(8192*10 + 1);
+	// Post-Request
 	int status_code = http_func(URL,buf,8192*10,POST,"abfrage=1");
+	
+	// Get-Request
+	// int status_code = http_func(URL,buf,8192*10,GET,NULL);
 	
 	#if DEBUG > 0
 		if(status_code == -1){

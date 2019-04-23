@@ -34,7 +34,7 @@ test:	$(TARGET3)
 clean:
 	rm -rf $(TARGET3) *.o *.a
 
-install:
+install: $(TARGET4)
 	install -C -m 644 $(TARGET4) /usr/lib
 	install -C -m 644 ./include/$(TARGET1).h /usr/include
 	install -C -m 644 ./include/$(TARGET2).h /usr/include

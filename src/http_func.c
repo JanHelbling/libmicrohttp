@@ -69,11 +69,7 @@ int do_connect(const char *fullurl, url *u)
 	struct sockaddr_in addr;
 	addr.sin_addr.s_addr	= inet_addr(ip_addr);
 	addr.sin_family		= AF_INET;
-	if(u->scheme[4] == 's'){
-		        addr.sin_port           = (in_port_t)htons(443);
-	} else {
-		        addr.sin_port           = (in_port_t)htons(80);
-	}
+	addr.sin_port           = (in_port_t)htons(443);
 	
 	#if DEBUG > 0
      	   printf("%s[DEBUG]%s[%s][%s]: creating socket and connect to '%s'...\n",REDBOLD,NOCOLOR,__FILE__,__func__,ip_addr);
@@ -269,11 +265,9 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 			memcpy(mt,"GET",3);
                         break;
         }
-#if 0	
 	#if DEBUG > 0
 		printf("%s[DEBUG]%s[%s][%s]: %s-Request on url '%s' and save %d bytes...\n",REDBOLD,NOCOLOR,__FILE__,__func__,mt,fullurl,num);
 	#endif
-#endif	
 
 	
 	// register the available SSL/TLS ciphers and digests
@@ -306,7 +300,7 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 		int i,n=0;
 		for(i=0;;i++){
 			n = SSL_read(ssl, b, 1);      //get reply and decrypt
-			if(n <= 0 || n == num - 1 )
+			if(n <= 0 || n == num - 1)
 				break;
 			bytes += n;
 			strncat(buffer,b,1);

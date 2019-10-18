@@ -2,7 +2,7 @@
 #include <http_func.h>
 #include <debug.h>
 
-#define URL "http://k-l-j.de/bibelstelle.htm"
+#define URL "https://www.somosa.ch/"
 
 
 int main(int argc,char *argv[]){	
@@ -11,10 +11,10 @@ int main(int argc,char *argv[]){
 	#endif
 	char **buf = (char **)malloc(8192*10 + 1);
 	// Post-Request
-	int status_code = http_func(URL,buf,8192*10,POST,"abfrage=1");
+	// int status_code = http_func(URL,buf,8192*10,POST,"abfrage=1");
 	
 	// Get-Request
-	// int status_code = http_func(URL,buf,8192*10,GET,NULL);
+	int status_code = http_func(URL,buf,8192*10,GET,NULL);
 	
 	#if DEBUG > 0
 		if(status_code == -1){

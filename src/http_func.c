@@ -153,8 +153,6 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 		printf("%s[DEBUG]%s[%s][%s]: %s-Request on url '%s' and save %d bytes...\n",REDBOLD,NOCOLOR,__FILE__,__func__,mt,fullurl,num);
 	#endif
 	
-	url *u = parse_url(fullurl);
-	
 	#if DEBUG > 0
 		printf("%s[DEBUG]%s[%s][%s]: resolve ip-address from host '%s'...\n",REDBOLD,NOCOLOR,__FILE__,__func__,u->hostname);
 	#endif

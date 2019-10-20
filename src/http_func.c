@@ -44,7 +44,7 @@ SSL_CTX* InitCTX(void)
     return ctx;
 }
 
-int do_connect(const char *fullurl, url *u)
+int do_connect(url *u)
 {
 
 	
@@ -129,8 +129,9 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 
 	url *u = parse_url(fullurl);
 	
+	server = do_connect(u);
+
 	if(u->scheme[4] != 's'){
-        server = do_connect(fullurl, u);
         char mt[8] = {NULL};
 
         switch(method){
@@ -274,7 +275,6 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
     	SSL_library_init();
 	ctx = InitCTX();
     	
-	server = do_connect(fullurl, u);
     	ssl = SSL_new(ctx);       // create a new SSL connection state
     	SSL_set_fd(ssl, server);      // attach the socket descriptor
 

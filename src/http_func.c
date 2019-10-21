@@ -128,8 +128,6 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 	char mt[8] = {0};
 
 	url *u = parse_url(fullurl);
-	
-	server = do_connect(u);
 
 	if(u->scheme[4] != 's'){
         char mt[8] = {NULL};
@@ -268,6 +266,7 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 		printf("%s[DEBUG]%s[%s][%s]: %s-Request on url '%s' and save %d bytes...\n",REDBOLD,NOCOLOR,__FILE__,__func__,mt,fullurl,num);
 	#endif
 
+	server = do_connect(u);
 	
 	// register the available SSL/TLS ciphers and digests
     	SSL_library_init();

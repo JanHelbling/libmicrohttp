@@ -30,7 +30,7 @@ int main(int argc,char *argv[]){
 		}
 	#elif DEBUG < 1
 		if(status_code != -1){
-			printf(buf);
+			puts(buf);
 			printf("URL: %s\nHTTP-Code: %d\n",URL,status_code);
 		}
 		else{

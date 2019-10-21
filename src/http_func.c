@@ -1,6 +1,3 @@
-#include <parse_url.h>
-#include <debug.h>
-
 #include <stdio.h>
 #include <errno.h>
 #include <unistd.h>
@@ -19,13 +16,9 @@
 #include <netdb.h>
 #include <errno.h>
 
-#define FAIL -1
+#include <libmicrohttp.h>
 
-typedef enum {
-	GET = 0,
-	HEAD = 1,
-	POST = 2
-} req;
+#define FAIL -1
 
 SSL_CTX* InitCTX(void)
 {   
@@ -235,6 +228,7 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 			#if DEBUG > 0
 				printf("%s[DEBUG]%s[%s][%s] Connected with %s encryption\n", REDBOLD,NOCOLOR,__FILE__,__func__, SSL_get_cipher(ssl));
 			#endif
+			
 			ShowCerts(ssl);
 			SSL_write(ssl, send_buffer, strlen(send_buffer));       //encrypt and send message
 		

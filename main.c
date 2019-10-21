@@ -1,6 +1,4 @@
-#include <parse_url.h>
-#include <http_func.h>
-#include <debug.h>
+#include <libmicrohttp.h>
 
 #define URL "http://k-l-j.de/"
 

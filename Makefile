@@ -9,7 +9,6 @@ TARGET1	=	parse_url
 TARGET2	=	http_func
 TARGET3	=	main
 TARGET4	=	libmicrohttp.a
-TARGET5	=	shell_colors
 
 default:	all test
 
@@ -36,9 +35,7 @@ clean:
 
 install: $(TARGET4)
 	install -C -m 644 $(TARGET4) /usr/lib
-	install -C -m 644 ./include/$(TARGET1).h /usr/include
-	install -C -m 644 ./include/$(TARGET2).h /usr/include
-	install -C -m 644 ./include/$(TARGET5).h /usr/include
+	install -C -m 644 ./include/libmicrohttp.h /usr/include
 
 uninstall:
-	rm -f /usr/include/$(TARGET1).h /usr/include/$(TARGET2).h /usr/include/$(TARGET5).h /usr/lib/$(TARGET4)
+	rm -f /usr/include/libmicrohttp.h /usr/lib/$(TARGET4)

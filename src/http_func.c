@@ -69,7 +69,10 @@ int do_connect(url *u)
 	struct sockaddr_in addr;
 	addr.sin_addr.s_addr	= inet_addr(ip_addr);
 	addr.sin_family		= AF_INET;
-	addr.sin_port           = (in_port_t)htons(443);
+	if(u->scheme[4] == 's')
+		addr.sin_port           = (in_port_t)htons(443);
+	else
+		addr.sin_port			= (in_port_t)htons(80);
 	
 	#if DEBUG > 0
      	   printf("%s[DEBUG]%s[%s][%s]: creating socket and connect to '%s'...\n",REDBOLD,NOCOLOR,__FILE__,__func__,ip_addr);

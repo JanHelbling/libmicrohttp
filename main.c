@@ -2,7 +2,7 @@
 #include <http_func.h>
 #include <debug.h>
 
-#define URL "https://www.somosa.ch/"
+#define URL "http://k-l-j.de/"
 
 
 int main(int argc,char *argv[]){	

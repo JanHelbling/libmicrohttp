@@ -34,7 +34,7 @@ SSL_CTX* InitCTX(void)
 
     OpenSSL_add_all_algorithms();		/* Load cryptos, et.al. */
     SSL_load_error_strings();			/* Bring in and register error messages */
-    method = SSLv23_client_method();		/* Create new client-method instance */
+    method = SSLv23_client_method();	/* Create new client-method instance */
     ctx = SSL_CTX_new(method);			/* Create new context */
     if ( ctx == NULL )
     {
@@ -75,8 +75,8 @@ int do_connect(url *u)
 		addr.sin_port			= (in_port_t)htons(80);
 	
 	#if DEBUG > 0
-     	   printf("%s[DEBUG]%s[%s][%s]: creating socket and connect to '%s'...\n",REDBOLD,NOCOLOR,__FILE__,__func__,ip_addr);
-        #endif
+    	printf("%s[DEBUG]%s[%s][%s]: creating socket and connect to '%s'...\n",REDBOLD,NOCOLOR,__FILE__,__func__,ip_addr);
+    #endif
 	
 	int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	
@@ -99,7 +99,7 @@ int do_connect(url *u)
 int ShowCerts(SSL* ssl)
 {   
 	X509 *cert;
-    	char *line;
+    char *line;
 
   	cert = SSL_get_peer_certificate(ssl);	/* get the server's certificate */
 #if DEBUG > 0
@@ -123,16 +123,14 @@ int ShowCerts(SSL* ssl)
 int http_func(const char *fullurl, char *buffer, int num, int method,const char *post_string)
 {
 	SSL_CTX *ctx = NULL;
-        int server;
-    	SSL *ssl = NULL;
-    	char buf[num];
-    	int bytes;
+    int server;
+    SSL *ssl = NULL;
+    char buf[num];
+    int bytes;
 
 	url *u = parse_url(fullurl);
-
-	char mt[8] = {NULL};
-
 	server = do_connect(u);
+	char mt[8] = {NULL};
 	
     switch(method){
             case GET:
@@ -150,7 +148,9 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
     }
 
 	if(u->scheme[4] != 's'){
-	
+		//
+		// HTTP-Request
+		//
 		#if DEBUG > 0
 			printf("%s[DEBUG]%s[%s][%s]: %s-Request on url '%s' and save %d bytes...\n",REDBOLD,NOCOLOR,__FILE__,__func__,mt,fullurl,num);
 		#endif
@@ -207,55 +207,52 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 		#if DEBUG > 0
 			printf("%s[DEBUG]%s[%s][%s]: http-respopnse received: exactly %d bytes received!\n",REDBOLD,NOCOLOR,__FILE__,__func__,y);
 		#endif
-	
-		char code[3] = {0};
-		memcpy(code,(char *)buffer+9,3);
-		return atoi(code);
 	} else {
-	
-	#if DEBUG > 0
-		printf("%s[DEBUG]%s[%s][%s]: %s-Request on url '%s' and save %d bytes...\n",REDBOLD,NOCOLOR,__FILE__,__func__,mt,fullurl,num);
-	#endif
-	
-	// register the available SSL/TLS ciphers and digests
-    	SSL_library_init();
-	ctx = InitCTX();
-    	
-    	ssl = SSL_new(ctx);       // create a new SSL connection state
-    	SSL_set_fd(ssl, server);      // attach the socket descriptor
-
-    if (SSL_connect(ssl) == FAIL)
-        ERR_print_errors_fp(stderr);
-    else {
-		char *send_buffer = (char *)malloc(8192);
-		memset(send_buffer,0,8192);
-		if(post_string == NULL){
-	                sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
-	        } else {
-        	        sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: %d\r\n\r\n%s",mt,u->path,u->query,u->hostname,strlen(post_string),post_string);
-        	}
+		//
+		// HTTPS-Request
+		//
 		#if DEBUG > 0
-			printf("%s[DEBUG]%s[%s][%s] Connected with %s encryption\n", REDBOLD,NOCOLOR,__FILE__,__func__, SSL_get_cipher(ssl));
+			printf("%s[DEBUG]%s[%s][%s]: %s-Request on url '%s' and save %d bytes...\n",REDBOLD,NOCOLOR,__FILE__,__func__,mt,fullurl,num);
 		#endif
-		ShowCerts(ssl);
-		SSL_write(ssl, send_buffer, strlen(send_buffer));       //encrypt and send message
-		
-		free(send_buffer);
-		char b[1];
-		strcpy(buffer,"");
-		int i,n=0;
-		for(i=0;;i++){
-			n = SSL_read(ssl, b, 1);      //get reply and decrypt
-			if(n <= 0 || n == num - 1)
-				break;
-			bytes += n;
-			strncat(buffer,b,1);
-		}
-		SSL_free(ssl);
-		char code[3] = {0};
-		memcpy(code,(char *)buffer+9,3);
-		return atoi(code);
-    }
-	}
+	
+		// register the available SSL/TLS ciphers and digests
+    	SSL_library_init();
+		ctx = InitCTX();
+    	
+    	ssl = SSL_new(ctx);			// create a new SSL connection state
+    	SSL_set_fd(ssl, server);	// attach the socket descriptor
 
+   		if (SSL_connect(ssl) == FAIL)
+        	ERR_print_errors_fp(stderr);
+    	else {
+			char *send_buffer = (char *)malloc(8192);
+			memset(send_buffer,0,8192);
+			if(post_string == NULL){
+	            sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
+	        } else {
+        	    sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: %d\r\n\r\n%s",mt,u->path,u->query,u->hostname,strlen(post_string),post_string);
+        	}
+			#if DEBUG > 0
+				printf("%s[DEBUG]%s[%s][%s] Connected with %s encryption\n", REDBOLD,NOCOLOR,__FILE__,__func__, SSL_get_cipher(ssl));
+			#endif
+			ShowCerts(ssl);
+			SSL_write(ssl, send_buffer, strlen(send_buffer));       //encrypt and send message
+		
+			free(send_buffer);
+			char b[1];
+			strcpy(buffer,"");
+			int i,n=0;
+			for(i=0;;i++){
+				n = SSL_read(ssl, b, 1);      //get reply and decrypt
+				if(n <= 0 || n == num - 1)
+					break;
+				bytes += n;
+				strncat(buffer,b,1);
+			}
+			SSL_free(ssl);
+		}
+	}
+	char code[3] = {0};
+	memcpy(code,(char *)buffer+9,3);
+	return atoi(code);
 }

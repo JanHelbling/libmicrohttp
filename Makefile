@@ -1,5 +1,5 @@
 CC	=	gcc
-CFLAGS	=	-g -Iinclude
+CFLAGS	=	-g -Iinclude -O2
 LINKOPT	=	-c 
 
 AR	=	ar

@@ -188,7 +188,7 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 			printf("%s[DEBUG]%s[%s][%s]: recving http-response in progress!\n",REDBOLD,NOCOLOR,__FILE__,__func__);
 		#endif
 	
-		while(rc != -1){
+		while(1){
 			rc = recv(server,buf,1,0);
 			if(rc == -1 || rc == 0){
 					break;
@@ -238,8 +238,8 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 			free(send_buffer);
 			char b[1];
 			strcpy(buffer,"");
-			int i,n=0;
-			for(i=0;;i++){
+			int i=0,n=0;
+			while(++i){
 				n = SSL_read(ssl, b, 1);      //get reply and decrypt
 				if(n <= 0 || n == num - 1)
 					break;

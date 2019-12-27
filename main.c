@@ -1,6 +1,6 @@
 #include <libmicrohttp.h>
 
-#define URL "http://k-l-j.de/"
+#define URL "https://www.jan-helbling.ch/"
 
 
 int main(int argc,char *argv[]){	

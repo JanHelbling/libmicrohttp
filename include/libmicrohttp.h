@@ -3,7 +3,7 @@
 #include <malloc.h>
 
 #ifndef DEBUG
-	#define DEBUG 0
+#define DEBUG 0
 #endif
 
 #define RED		"\x1b\x5b\x33\x31\x6d"
@@ -14,9 +14,9 @@
 #define	NOCOLOR		"\x1b\x5b\x30\x6d"
 
 typedef enum {
-        GET = 0,
-        HEAD = 1,
-        POST = 2
+	GET = 0,
+	HEAD = 1,
+	POST = 2
 } req;
 
 typedef struct {

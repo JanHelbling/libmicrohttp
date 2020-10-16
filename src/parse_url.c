@@ -22,7 +22,7 @@ url *parse_url(const char *unparsed_url){
 	if(unparsed_url[0] == 'h' && unparsed_url[6] == '/'){
 		for(i=0;i<strlen(unparsed_url);i++){
 			u->scheme[i] = unparsed_url[i];
-			if(u->scheme[i - 1] == '/' && unparsed_url[i] == '/'){
+			if(i != 0 && u->scheme[i - 1] == '/' && unparsed_url[i] == '/'){
 				break;
 			}
 		}

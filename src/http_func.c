@@ -76,7 +76,7 @@ int do_connect(url *u)
 
 	if(rc == -1){
 #if DEBUG > 0
-		char error[32];
+		char error[20];
 		if(errno == ECONNREFUSED)
 			memcpy(error,"Connection refused.",19);
 		else if(errno == ECONNABORTED)
@@ -125,7 +125,7 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 
 	url *u = parse_url(fullurl);
 	server = do_connect(u);
-	char mt[8] = {NULL};
+	char mt[5] = {NULL};
 
 	switch(method){
 		case GET:
@@ -154,13 +154,13 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 		printf("%s[DEBUG]%s[%s][%s]: resolve ip-address from host '%s'...\n",REDBOLD,NOCOLOR,__FILE__,__func__,u->hostname);
 #endif
 
-		char *send_buffer = (char *)malloc(8192);
+		char *send_buffer = (char *)malloc(8193);
 		memset(send_buffer,NULL,8192);
 
 		if(post_string == NULL){
-			sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
+			snprintf(send_buffer,8192,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
 		} else {
-			sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: %d\r\n\r\n%s",mt,u->path,u->query,u->hostname,strlen(post_string),post_string);
+			snprintf(send_buffer,8192,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: %d\r\n\r\n%s",mt,u->path,u->query,u->hostname,strlen(post_string),post_string);
 		}
 
 #if DEBUG > 0

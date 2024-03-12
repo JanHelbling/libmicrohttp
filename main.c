@@ -8,7 +8,7 @@ int main(int argc,char *argv[]){
 #if DEBUG > 0
 	printf("%s[DEBUG]%s[%s][%s]: Running main(), execute http_func()...\n",REDBOLD,NOCOLOR,__FILE__,__func__);
 #endif
-	char **buf = (char **)malloc(8192*10 + 1);
+	char *buf = (char *)malloc(8192*10 + 1);
 	// Post-Request
 	// int status_code = http_func(URL,buf,8192*10,POST,"abfrage=1");
 	
@@ -31,7 +31,7 @@ int main(int argc,char *argv[]){
 		}
 	#elif DEBUG < 1
 		if(status_code != -1){
-			printf("%s\n",buf);
+			printf("%s\n", buf);
 			printf("URL: %s\nHTTP-Code: %d\n",argv[num],status_code);
 		}
 		else{

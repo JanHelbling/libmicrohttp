@@ -1,6 +1,9 @@
 CC	=	gcc
-CFLAGS	=	-g -Iinclude -O2
-LINKOPT	=	-c 
+
+DEBUG	=	0
+
+CFLAGS	=	-g -Iinclude -O2 -pipe -DDEBUG=${DEBUG}
+LINKOPT	=	-c
 
 AR	=	ar
 AROPTS	=	-rcs

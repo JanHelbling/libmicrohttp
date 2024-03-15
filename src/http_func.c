@@ -134,6 +134,15 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 		case POST:
 			memcpy(mt,"POST",4);
 			break;
+		case OPTIONS:
+			memcpy(mt,"OPTIONS",7);
+			break;
+		case PUT:
+			memcpy(mt,"PUT",3);
+			break;
+		case DELETE:
+			memcpy(mt,"DELETE",6);
+			break;
 		default:
 			memcpy(mt,"GET",3);
 			break;
@@ -249,3 +258,34 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 	memcpy(code,(char *)buffer+9,3);
 	return atoi(code);
 }
+
+int http_get(const char *fullurl, char *buffer, int num)
+{
+	return http_func(fullurl,buffer,num,GET,NULL);
+}
+
+int http_post(const char *fullurl, char *buffer, int num, const char *post_string)
+{
+	return http_func(fullurl,buffer,num,POST,post_string);
+}
+
+int http_head(const char *fullurl, char *buffer, int num)
+{
+	return http_func(fullurl,buffer,num,HEAD,NULL);
+}
+
+int http_options(const char *fullurl, char *buffer, int num)
+{
+	return http_func(fullurl,buffer,num,OPTIONS,NULL);
+}
+
+int http_put(const char *fullurl, char *buffer, int num, const char *post_string)
+{
+	return http_func(fullurl,buffer,num,PUT,post_string);
+}
+
+int http_delete(const char *fullurl, char *buffer, int num)
+{
+	return http_func(fullurl,buffer,num,DELETE,NULL);
+}
+

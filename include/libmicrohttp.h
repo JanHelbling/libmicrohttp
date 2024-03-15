@@ -15,7 +15,10 @@
 typedef enum {
 	GET = 0,
 	HEAD = 1,
-	POST = 2
+	POST = 2,
+	PUT = 3,
+	DELETE = 4,
+	OPTIONS = 5,
 } req;
 
 typedef struct {
@@ -30,3 +33,15 @@ typedef struct {
 url *parse_url(const char *unparsed_url);
 
 int http_func(const char *fullurl,char *buffer,int num, int method,const char *post_string);
+
+int http_get(const char *fullurl,char *buffer,int num);
+
+int http_post(const char *fullurl,char *buffer,int num,const char *post_string);
+
+int http_head(const char *fullurl,char *buffer,int num);
+
+int http_put(const char *fullurl,char *buffer,int num,const char *post_string);
+
+int http_delete(const char *fullurl,char *buffer,int num);
+
+int http_options(const char *fullurl,char *buffer,int num);

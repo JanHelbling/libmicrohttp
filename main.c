@@ -15,7 +15,7 @@ int main(int argc,char *argv[]){
 	int num;
 	for(num=1;num<argc;num++){
 		// Get-Request
-		int status_code = http_func(argv[num],buf,8192*10,GET,NULL);
+		int status_code = http_get(argv[num],buf,8192*10);
 
 	#if DEBUG > 0
 		if(status_code == -1){

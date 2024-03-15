@@ -2,7 +2,7 @@ CC	=	gcc
 
 DEBUG	=	0
 
-CFLAGS	=	-g -Iinclude -O2 -pipe -DDEBUG=${DEBUG}
+CFLAGS	=	-g -Iinclude -O2 -pipe -std=gnu11 -DDEBUG=${DEBUG}
 LINKOPT	=	-c
 
 AR	=	ar

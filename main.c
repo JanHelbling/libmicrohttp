@@ -49,11 +49,24 @@ int main(int argc,char *argv[]){
 		}
 	#endif
 	}
+	
 	// Extract the Body
 	char *body = malloc(8192*10);
+	
 	int r = extract_body(buf,body);
 	free(body);
 	
+	// Extract all URLs
+	char **urls = malloc(8192*10);
+	int n = extract_all_urls(buf,urls);
+	
+	// Print all URLs
+	int i;
+	for(i=0;i<n;i++){
+		printf("%s\n",urls[i]);
+	}
+	
+	free(urls);
 	free(buf);
 
 	return 0;

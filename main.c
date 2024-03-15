@@ -10,7 +10,17 @@ int main(int argc,char *argv[]){
 #endif
 	char *buf = (char *)malloc(8192*10 + 1);
 	// Post-Request
-	// int status_code = http_func(URL,buf,8192*10,POST,"abfrage=1");
+	// int status_code = http_post(URL,buf,8192*10,"abfrage=1");
+	// Get-Request	
+	// int status_code = http_get(URL,buf,8192*10);
+	// Head-Request
+	// int status_code = http_head(URL,buf,8192*10);
+	// Put-Request
+	// int status_code = http_put(URL,buf,8192*10,"abfrage=1");
+	// Delete-Request
+	// int status_code = http_delete(URL,buf,8192*10);
+	// Options-Request
+	// int status_code = http_options(URL,buf,8192*10);
 	
 	int num;
 	for(num=1;num<argc;num++){
@@ -39,6 +49,12 @@ int main(int argc,char *argv[]){
 		}
 	#endif
 	}
+	// Extract the Body
+	char *body = malloc(8192*10);
+	int r = extract_body(buf,body);
+	free(body);
+	
 	free(buf);
+
 	return 0;
 }

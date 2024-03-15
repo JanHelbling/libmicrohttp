@@ -259,6 +259,15 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 	return atoi(code);
 }
 
+int extract_body(const char *buffer, char *body)
+{
+	char *p = strstr(buffer,"\r\n\r\n");
+	if(p == NULL)
+		return 0;
+	memcpy(body,p+4,strlen(p+4));
+	return 0;
+}
+
 int http_get(const char *fullurl, char *buffer, int num)
 {
 	return http_func(fullurl,buffer,num,GET,NULL);

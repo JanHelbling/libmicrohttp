@@ -45,3 +45,5 @@ int http_put(const char *fullurl,char *buffer,int num,const char *post_string);
 int http_delete(const char *fullurl,char *buffer,int num);
 
 int http_options(const char *fullurl,char *buffer,int num);
+
+int extract_body(const char *buffer, char *body);

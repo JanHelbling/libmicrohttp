@@ -280,7 +280,7 @@ int extract_all_urls(const char *buffer, char **urls)
 			break;
 		urls[i] = (char *)malloc(q-p+1);
 		memset(urls[i],0x00,q-p+1);
-		if(strncmp(p,"http",4) != 0){
+		if(strncmp(p,"http",3) != 0 && p[0] != '/'){
 			memcpy(urls[i],"/",1);
 			memcpy(urls[i]+1,p,q-p);
 		} else {

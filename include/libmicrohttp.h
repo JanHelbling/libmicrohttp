@@ -47,3 +47,5 @@ int http_delete(const char *fullurl,char *buffer,int num);
 int http_options(const char *fullurl,char *buffer,int num);
 
 int extract_body(const char *buffer, char *body);
+
+int extract_all_urls(const char *buffer, char **urls);

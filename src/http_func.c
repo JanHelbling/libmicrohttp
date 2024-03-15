@@ -268,6 +268,24 @@ int extract_body(const char *buffer, char *body)
 	return 0;
 }
 
+int extract_all_urls(const char *buffer, char **urls)
+{
+	char *p = (char *)buffer;
+	char *q = (char *)buffer;
+	int i = 0;
+	while((p = strstr(p,"href=")) != NULL){
+		p += 6;
+		q = strchr(p,'"');
+		if(q == NULL)
+			break;
+		urls[i] = (char *)malloc(q-p+1);
+		memset(urls[i],0x00,q-p+1);
+		memcpy(urls[i],p,q-p);
+		i++;
+	}
+	return i;
+}
+
 int http_get(const char *fullurl, char *buffer, int num)
 {
 	return http_func(fullurl,buffer,num,GET,NULL);

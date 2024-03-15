@@ -31,7 +31,7 @@ all:	$(TARGET1).o $(TARGET2).o $(TARGET3).o
 	$(CC) $(CFLAGS) $(TARGET1).o $(TARGET2).o $(TARGET3).o -o $(TARGET3) -lssl -lcrypto
 
 test:	$(TARGET3)
-	./$(TARGET3) https://www.jan-helbling.ch/
+	./$(TARGET3) https://www.somosa.ch/home
 
 clean:
 	rm -rf $(TARGET3) *.o *.a

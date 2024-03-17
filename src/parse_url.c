@@ -40,15 +40,17 @@ url *parse_url(const char *unparsed_url){
 	if(strlen(unparsed_url) > 1){
 		if(strstr(unparsed_url,"?") != NULL){
 			for(i=0;unparsed_url[i] != '?';i++){
-				u->path[i] = unparsed_url[i];			}
+				u->path[i] = unparsed_url[i];
+			}
 		} else {
 			for(i=0;i<strlen(unparsed_url);i++){
 				u->path[i] = unparsed_url[i];
 			}
 		}
-	} else if(strlen(unparsed_url) == 1 && unparsed_url[0] == '/'){
+	} else if((strlen(unparsed_url) == 1 && unparsed_url[0] == '/')){
 		u->path[0] = '/';
 	} else {
+		u->path[0] = '/';
 		return u;
 	}
 

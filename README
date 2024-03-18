@@ -21,7 +21,7 @@ A small http and https library, take a look at main.c
 
 Install:
 git clone https://github.com/JanHelbling/libmicrohttp
-cd libicrohttp
+cd libmicrohttp
 mkdir build && cd build
 cmake ..
 make

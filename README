@@ -20,7 +20,7 @@ Description:
 A small http and https library, take a look at main.c
 
 Install:
-git clone https://github.com/JanHelbling/libmicrhttp
+git clone https://github.com/JanHelbling/libmicrohttp
 cd libicrohttp
 mkdir build && cd build
 cmake ..

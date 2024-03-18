@@ -229,9 +229,9 @@ int http_func(const char *fullurl, char *buffer, int num, int method,const char 
 			char *send_buffer = (char *)malloc(8192);
 			memset(send_buffer,0,8192);
 			if(post_string == NULL){
-				sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
+				snprintf(send_buffer,8192,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\n\r\n",mt,u->path,u->query,u->hostname);
 			} else {
-				sprintf(send_buffer,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: %zu\r\n\r\n%s",mt,u->path,u->query,u->hostname,strlen(post_string),post_string);
+				snprintf(send_buffer,8192,"%s %s%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: Mozilla/5.0\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: %zu\r\n\r\n%s",mt,u->path,u->query,u->hostname,strlen(post_string),post_string);
 			}
 #if DEBUG > 0
 			printf("%s[DEBUG]%s[%s][%s] Connected with %s encryption\n", REDBOLD,NOCOLOR,__FILE__,__func__, SSL_get_cipher(ssl));

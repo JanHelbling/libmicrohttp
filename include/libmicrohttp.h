@@ -1,3 +1,6 @@
+#ifndef LIBMICROHTTP_LIBMICROHTTP_H
+#define LIBMICROHTTP_LIBMICROHTTP_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -13,21 +16,21 @@
 #define	NOCOLOR		"\x1b\x5b\x30\x6d"
 
 typedef enum {
-	GET = 0,
-	HEAD = 1,
-	POST = 2,
-	PUT = 3,
-	DELETE = 4,
-	OPTIONS = 5,
+    GET = 0,
+    HEAD = 1,
+    POST = 2,
+    PUT = 3,
+    DELETE = 4,
+    OPTIONS = 5,
 } req;
 
 typedef struct {
-	char scheme[16];
-	char hostname[64];
-	char path[256];
-	char query[256];
-	char fragment[64];
-	char full_url[656];
+    char scheme[16];
+    char hostname[64];
+    char path[256];
+    char query[256];
+    char fragment[64];
+    char full_url[656];
 } url;
 
 url *parse_url(const char *unparsed_url);
@@ -49,3 +52,6 @@ int http_options(const char *fullurl,char *buffer,int num);
 int extract_body(const char *buffer, char *body);
 
 int extract_all_urls(const char *buffer, char **urls);
+
+
+#endif //LIBMICROHTTP_LIBMICROHTTP_H
